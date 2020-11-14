@@ -57,7 +57,8 @@ def __build_transform(transform_cfg):
         return getattr(transforms, transform_cfg)()
     for key, val in transform_cfg.items():
         if isinstance(val, list):
-            return getattr(transforms, key)([__build_transform(cfg) for cfg in val])
+            return getattr(transforms, key)(
+                [__build_transform(cfg) for cfg in val])
         elif isinstance(val, dict):
             return getattr(transforms, key)(**val)
         else:

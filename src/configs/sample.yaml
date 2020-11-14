@@ -23,8 +23,8 @@ data:
 
 model:
   base: timm
-  model_name: efficientnet_b4
-  pretrained: False
+  model_name: tf_efficientnet_b4
+  pretrained: True
   num_classes: 10
   in_chans: 3
 
@@ -37,7 +37,7 @@ optimizer:
     base: torch_optimizer
     optim_name: RAdam
     params:
-      lr: !!float 1e-3
+      lr: !!float 1e-2
   scheduler:
     base: torch
     sche_name: CosineAnnealingLR

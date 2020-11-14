@@ -27,7 +27,10 @@ class LightningModuleReg(pl.LightningModule):
         y_hat = self(x)
         loss = self.loss(y_hat, y)
         correct, labels_size = self.__calc_correct(y_hat, y)
-        return {'val_loss': loss, "val_corr": correct, "labels_size": labels_size}
+        return {
+            'val_loss': loss,
+            "val_corr": correct,
+            "labels_size": labels_size}
 
     def validation_epoch_end(self, outputs):
         val_loss_mean = torch.stack([x['val_loss'] for x in outputs]).mean()
