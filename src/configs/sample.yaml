@@ -6,7 +6,7 @@ general:
   amp_backend: "native" # [native or apex]
   amp_level: O2
   accelerator: null # [dp, ddp, ddp_cpu or ddp2]
-  acc_grad: 2
+  acc_grad: 1
   deterministic: True
   debug: False
   limit_val_batches: 0.25
@@ -16,13 +16,14 @@ data:
   dataset:
     root: ../data/CIFAR10/train
   dataloader:
-    batch_size: 2048
+    batch_size: 1024
     num_workers: 4
     shuffle: True
+    pin_memory: True
 
 model:
   base: timm
-  model_name: resnet18
+  model_name: efficientnet_b4
   pretrained: False
   num_classes: 10
   in_chans: 3
@@ -54,18 +55,14 @@ callback:
     save_weights_only: True
     filename: "{epoch}-{val_loss_mean:.3f}-{val_acc:.3f}.pth"
 
-logger:
-  experiment_name: Default
-  tracking_uri: file:./mlruns
-
 transform:
   train:
     Compose:
-      # - RandomResizedCrop:
-      #     height: 32
-      #     width: 32
-      #     scale: [0.98, 1.0]
-      #     ratio: [0.98, 1.0]
+      - RandomResizedCrop:
+          height: 32
+          width: 32
+          scale: [0.98, 1.0]
+          ratio: [0.98, 1.0]
       - Flip
       - Normalize:
           mean: [0.485, 0.456, 0.406]

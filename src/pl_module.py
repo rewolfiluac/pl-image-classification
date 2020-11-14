@@ -11,6 +11,7 @@ class LightningModuleReg(pl.LightningModule):
         self.cfg = cfg
         self.net = get_model(self.cfg.model)
         self.loss = get_loss(self.cfg.loss)
+        self.save_hyperparameters(dict(self.cfg))
 
     def forward(self, x):
         return self.net(x)
@@ -19,6 +20,7 @@ class LightningModuleReg(pl.LightningModule):
         x, y = batch
         y_hat = self(x)
         loss = self.loss(y_hat, y)
+        self.log("train_loss", loss)
         return loss
 
     def validation_step(self, batch, batch_idx):

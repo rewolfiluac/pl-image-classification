@@ -1,3 +1,4 @@
+import mlflow
 from pytorch_lightning.trainer import Trainer, seed_everything
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import MLFlowLogger
@@ -18,14 +19,7 @@ def train(cfg):
         filename=cfg.callback.checkpoint.filename
     )
 
-    logger = MLFlowLogger(
-        experiment_name=cfg.logger.experiment_name,
-        tracking_uri=cfg.logger.tracking_uri
-    )
-    logger.log_hyperparams(dict(cfg))
-
     trainer = Trainer(
-        logger=logger,
         checkpoint_callback=True,
         callbacks=[checkpoint_callback],
         max_epochs=cfg.general.epoch,
@@ -56,4 +50,6 @@ if __name__ == "__main__":
     args = get_parser().parse_args()
     cfg = read_yaml(path=args.config)
     seed_everything(seed=cfg.general.seed)
+    mlflow.pytorch.autolog()
+    mlflow.log_artifact(args.config)
     train(cfg)
