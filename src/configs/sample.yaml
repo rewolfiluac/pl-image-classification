@@ -30,8 +30,7 @@ model:
 
 loss:
   base: torch
-  name: CrossEntropyLoss
-  params: {}
+  name: cross_entropy
 
 optimizer:
   optimizer:

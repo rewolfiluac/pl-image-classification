@@ -1,4 +1,5 @@
 import torch
+from torch.nn import functional
 from timm import create_model, list_models
 import torch_optimizer as t_optim
 
@@ -23,7 +24,7 @@ def get_model(cfg):
 
 def get_loss(cfg):
     if cfg.base == "torch":
-        return getattr(torch.nn, cfg.name)(**cfg.params)
+        return getattr(functional, cfg.name)
     else:
         assert True, "Not Found Loss Base: {}".format(cfg.base)
 
