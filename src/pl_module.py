@@ -11,7 +11,6 @@ class LightningModuleReg(pl.LightningModule):
         self.cfg = cfg
         self.net = get_model(self.cfg.model)
         self.loss = get_loss(self.cfg.loss)
-        self.save_hyperparameters(dict(self.cfg))
 
     def forward(self, x):
         return self.net(x)

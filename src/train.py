@@ -1,7 +1,6 @@
 import mlflow
 from pytorch_lightning.trainer import Trainer, seed_everything
 from pytorch_lightning.callbacks import ModelCheckpoint
-from pytorch_lightning.loggers import MLFlowLogger
 
 from pl_module import LightningModuleReg
 from pl_data_module import ImageDataModule
