@@ -1,2 +1,15 @@
 # pl-image-classification
-image classification example using pytorch lightning
+## Environment
+- Python 3.8+
+
+## Download CIFAR10 Dataset
+```
+cd src
+python download_datasets.py
+```
+
+## Training
+```
+cd src
+python train.py
+```
