@@ -8,8 +8,14 @@ cd src
 python download_datasets.py --dataset CIFAR10
 ```
 
-## Training
+## Training CIFAR10
 ```
 cd src
 python train.py
+```
+
+## Inference CIFAR10
+```
+cd src
+python inference
 ```
