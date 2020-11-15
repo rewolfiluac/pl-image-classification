@@ -1,7 +1,6 @@
 from urllib.parse import urlparse
 
 import mlflow
-from mlflow.entities import ViewType
 from pytorch_lightning.trainer import Trainer, seed_everything
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import LightningLoggerBase
