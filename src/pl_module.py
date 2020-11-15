@@ -40,9 +40,6 @@ class LightningModuleReg(pl.LightningModule):
         metrics = {'val_loss_mean': float(val_loss_mean.cpu().numpy()),
                    'val_acc': float(val_acc)}
         self.log_dict(metrics)
-        # self.logger.log_metrics(
-        #     metrics,
-        #     step=self.current_epoch)
 
     def configure_optimizers(self):
         optimizer, scheduler = get_optimizer(

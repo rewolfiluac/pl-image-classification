@@ -1,6 +1,7 @@
 from urllib.parse import urlparse
 
 import mlflow
+from mlflow.entities import ViewType
 from pytorch_lightning.trainer import Trainer, seed_everything
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import LightningLoggerBase
@@ -19,8 +20,9 @@ class MyLogger(LightningLoggerBase):
     def name(self):
         return "MyLogger"
 
+    @property
     def version(self):
-        return "0.1"
+        return mlflow.active_run().info.run_id
 
     def experiment(self):
         return mlflow
