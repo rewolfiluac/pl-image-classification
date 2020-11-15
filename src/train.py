@@ -47,8 +47,13 @@ def train(cfg):
 
 if __name__ == "__main__":
     args = get_parser().parse_args()
+
     cfg = read_yaml(path=args.config)
+    cfg.data.dataset.val_k = args.k_fold_num
+
     seed_everything(seed=cfg.general.seed)
+
     mlflow.pytorch.autolog()
     mlflow.log_artifact(args.config)
+
     train(cfg)
