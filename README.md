@@ -17,5 +17,5 @@ python train.py
 ## Inference CIFAR10
 ```
 cd src
-python inference
+python inference.py
 ```
