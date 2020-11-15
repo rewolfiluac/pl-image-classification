@@ -58,7 +58,6 @@ class LightningModuleInference(pl.LightningModule):
         super().__init__()
         self.cfg = cfg
         self.net = get_model(self.cfg.model)
-        self.loss = get_loss(self.cfg.loss)
 
     def forward(self, x):
         return self.net(x)
