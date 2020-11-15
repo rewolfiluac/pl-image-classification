@@ -21,10 +21,6 @@ callback:
     save_weights_only: True
     filename: "{epoch}-{val_loss_mean:.3f}-{val_acc:.3f}.pth"
 
-logger:
-  experiment_name: Default
-  tracking_uri: ./mlruns
-
 data:
   dataset:
     root: ../data/CIFAR10/train
