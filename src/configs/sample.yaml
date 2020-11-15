@@ -1,16 +1,25 @@
 general:
   seed: 57
-  epoch: 100
+  epoch: 1500
   gpus: [0]
   precision: 16
   amp_backend: "native" # [native or apex]
   amp_level: O2
   accelerator: null # [dp, ddp, ddp_cpu or ddp2]
-  acc_grad: 1
+  acc_grad: 2
   deterministic: True
   debug: False
   limit_val_batches: 0.25
   resume_from_checkpoint: null
+
+callback:
+  checkpoint:
+    monitor: val_loss_mean
+    save_last: True
+    save_top_k: 1
+    mode: min
+    save_weights_only: True
+    filename: "{epoch}-{val_loss_mean:.3f}-{val_acc:.3f}.pth"
 
 data:
   dataset:
@@ -36,25 +45,17 @@ loss:
 
 optimizer:
   optimizer:
-    base: torch_optimizer
     optim_name: RAdam
     params:
-      lr: !!float 1e-2
+      lr: !!float 1e-5
   scheduler:
-    base: torch
-    sche_name: CosineAnnealingLR
+    name: CosineAnnealingWarmUpRestarts
     params:
-      T_max: 50
-      eta_min: !!float 1e-5
-
-callback:
-  checkpoint:
-    monitor: val_loss_mean
-    save_last: True
-    save_top_k: 1
-    mode: min
-    save_weights_only: True
-    filename: "{epoch}-{val_loss_mean:.3f}-{val_acc:.3f}.pth"
+      T_0: 150
+      T_mult: 1
+      eta_max: !!float 1e-2
+      T_up: 10
+      gamma: 0.8
 
 transform:
   train:

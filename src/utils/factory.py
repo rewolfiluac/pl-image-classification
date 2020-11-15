@@ -1,8 +1,8 @@
-import torch
 from torch.nn import functional
 from timm import create_model, list_models
-import torch_optimizer as t_optim
 
+import optimizers
+import schedulers
 import transforms
 
 
@@ -31,20 +31,22 @@ def get_loss(cfg):
 
 def get_optimizer(cfg, model_params):
     # optimizer
-    if cfg.optimizer.base == "torch_optimizer":
-        optimizer = getattr(t_optim, cfg.optimizer.optim_name)(
+    try:
+        optimizer = getattr(optimizers, cfg.optimizer.optim_name)(
             model_params, **cfg.optimizer.params
         )
-    else:
-        assert True, "Not Found Optimizer Base: {}".format(cfg.optimizer.base)
-
+    except AttributeError:
+        raise Exception(
+            "Not Found Optimizer Base: {}".format(cfg.optimizer.base))
     # scheduler
-    if cfg.scheduler.base == "torch":
-        scheduler = getattr(torch.optim.lr_scheduler, cfg.scheduler.sche_name)(
+    try:
+        scheduler = getattr(schedulers, cfg.scheduler.name)(
             optimizer, **cfg.scheduler.params
         )
-    else:
-        assert True, "Not Found Scheduler Base: {}".format(cfg.optimizer.base)
+    except AttributeError:
+        raise Exception(
+            "Not Found Scheduler: {}".format(cfg.scheduler.name))
+
     return optimizer, scheduler
 
 
