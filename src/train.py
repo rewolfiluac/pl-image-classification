@@ -1,11 +1,37 @@
+from urllib.parse import urlparse
+
 import mlflow
 from pytorch_lightning.trainer import Trainer, seed_everything
 from pytorch_lightning.callbacks import ModelCheckpoint
+from pytorch_lightning.loggers import LightningLoggerBase
+from pytorch_lightning.utilities import rank_zero_only
 
 from pl_module import LightningModuleReg
 from pl_data_module import ImageDataModule
 from utils.util import get_parser, read_yaml
 from utils.factory import get_transform
+
+
+class MyLogger(LightningLoggerBase):
+    def __init__(self):
+        super().__init__()
+
+    def name(self):
+        return "MyLogger"
+
+    def version(self):
+        return "0.1"
+
+    def experiment(self):
+        return mlflow
+
+    @rank_zero_only
+    def log_hyperparams(self, params):
+        super().log_hyperparams(params)
+
+    @rank_zero_only
+    def log_metrics(self, metrics, step):
+        mlflow.log_metrics(metrics, step)
 
 
 def train(cfg):
@@ -15,12 +41,14 @@ def train(cfg):
         save_top_k=cfg.callback.checkpoint.save_top_k,
         mode=cfg.callback.checkpoint.mode,
         save_weights_only=cfg.callback.checkpoint.save_weights_only,
-        filename=cfg.callback.checkpoint.filename
+        filename=cfg.callback.checkpoint.filename,
+        dirpath=urlparse(mlflow.get_artifact_uri()).path
     )
 
     trainer = Trainer(
         checkpoint_callback=True,
         callbacks=[checkpoint_callback],
+        logger=MyLogger(),
         max_epochs=cfg.general.epoch,
         gpus=cfg.general.gpus,
         precision=cfg.general.precision,
