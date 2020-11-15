@@ -11,6 +11,9 @@ def get_parser():
     arg("-c", "--config",
         default="./configs/sample.yaml",
         type=str, help="config path")
+    arg("-k", "--k_fold_num",
+        default=0, type=int,
+        help="validation index for cross-validation")
     return parser
 
 

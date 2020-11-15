@@ -5,7 +5,7 @@
 ## Download CIFAR10 Dataset
 ```
 cd src
-python download_datasets.py
+python download_datasets.py --dataset CIFAR10
 ```
 
 ## Training
