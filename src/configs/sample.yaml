@@ -1,6 +1,6 @@
 general:
   seed: 57
-  epoch: 1500
+  epoch: 150
   gpus: [0]
   precision: 16
   amp_backend: "native" # [native or apex]
