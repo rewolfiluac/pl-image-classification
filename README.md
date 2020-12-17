@@ -1,6 +1,6 @@
 # pl-image-classification
 ## Environment
-- Python 3.8+
+- [Dockerfile](https://github.com/rewolfiluac/develop-env-docker)
 
 ## Download CIFAR10 Dataset
 ```
