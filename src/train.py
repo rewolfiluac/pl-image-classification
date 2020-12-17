@@ -8,31 +8,8 @@ from pytorch_lightning.utilities import rank_zero_only
 
 from pl_module import LightningModuleReg
 from pl_data_module import ImageDataModule
-from utils.util import get_parser, read_yaml
+from utils.util import get_parser, read_yaml, git_commits
 from utils.factory import get_transform
-
-
-class MyLogger(LightningLoggerBase):
-    def __init__(self):
-        super().__init__()
-
-    def name(self):
-        return "MyLogger"
-
-    @property
-    def version(self):
-        return mlflow.active_run().info.run_id
-
-    def experiment(self):
-        return mlflow
-
-    @rank_zero_only
-    def log_hyperparams(self, params):
-        super().log_hyperparams(params)
-
-    @rank_zero_only
-    def log_metrics(self, metrics, step):
-        mlflow.log_metrics(metrics, step)
 
 
 def train(cfg):
@@ -49,7 +26,7 @@ def train(cfg):
     trainer = Trainer(
         checkpoint_callback=True,
         callbacks=[checkpoint_callback],
-        logger=MyLogger(),
+        logger=False,
         max_epochs=cfg.general.epoch,
         gpus=cfg.general.gpus,
         precision=cfg.general.precision,
@@ -74,7 +51,8 @@ def train(cfg):
     trainer.fit(model=pl_module, datamodule=pl_data_module)
 
 
-if __name__ == "__main__":
+@git_commits
+def run():
     args = get_parser().parse_args()
 
     cfg = read_yaml(path=args.config)
@@ -86,3 +64,7 @@ if __name__ == "__main__":
     mlflow.log_artifact(args.config)
 
     train(cfg)
+
+
+if __name__ == "__main__":
+    run()
