@@ -23,7 +23,7 @@ TARGET_EXTENSION = [
 
 TEST_ROOT_PATH = "../data/CIFAR10/test"
 OUTPUT_PATH = "../data/CIFAR10/output"
-CHECKPOINT = "./mlruns/0/4dbc974a3b814a66a50ff35cbf2614ca/artifacts/epoch=28-val_loss_mean=0.486-val_acc=0.842.pth.ckpt"
+CHECKPOINT = "/home/dev/pl-image-classification/src/mlruns/0/884fc596d7fe4c79830482c8ef94d6f4/artifacts/last.ckpt"
 
 
 def inference(cfg):

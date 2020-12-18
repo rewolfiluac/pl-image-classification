@@ -25,7 +25,7 @@ class ImageDataModule(LightningDataModule):
         val_k = self.cfg.dataset.val_k
         if k_fold > 0:
             X, y = train_dataset.get_all_data()
-            skf = StratifiedKFold(n_splits=k_fold, shuffle=True)
+            skf = StratifiedKFold(n_splits=k_fold, shuffle=False)
             fold_set = [(train_idx, val_idx)
                         for train_idx, val_idx in skf.split(X, y)]
             train_dataset = Subset(
