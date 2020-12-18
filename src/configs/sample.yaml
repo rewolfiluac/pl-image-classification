@@ -53,7 +53,7 @@ optimizer:
     params:
       T_0: 1000
       T_mult: 1
-      eta_max: !!float 1e-1
+      eta_max: !!float 1e-3
       T_up: 10
       gamma: 0.8
 
