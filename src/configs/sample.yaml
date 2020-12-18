@@ -33,7 +33,7 @@ data:
 
 model:
   base: timm
-  model_name: tf_efficientnet_b4_bn
+  model_name: tf_efficientnet_b4_ns
   pretrained: True
   num_classes: 10
   in_chans: 3
