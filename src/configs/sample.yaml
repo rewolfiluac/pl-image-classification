@@ -51,9 +51,9 @@ optimizer:
   scheduler:
     name: CosineAnnealingWarmUpRestarts
     params:
-      T_0: 1000
+      T_0: 500
       T_mult: 1
-      eta_max: !!float 1e-2
+      eta_max: !!float 1e-3
       T_up: 10
       gamma: 0.8
 
