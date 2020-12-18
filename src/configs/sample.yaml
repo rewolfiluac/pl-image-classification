@@ -23,10 +23,10 @@ callback:
 data:
   dataset:
     root: ../data/CIFAR10/train
-    k_fold: 5
+    k_fold: 10
     val_k: 0
   dataloader:
-    batch_size: 128
+    batch_size: 2048
     num_workers: 4
     shuffle: True
     pin_memory: True
