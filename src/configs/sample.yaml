@@ -1,6 +1,6 @@
 general:
   seed: 57
-  epoch: 250
+  epoch: 500
   gpus: [0]
   precision: 16
   amp_backend: "native" # [native or apex]
@@ -33,7 +33,7 @@ data:
 
 model:
   base: timm
-  model_name: tf_efficientnet_b4_ns
+  model_name: tf_efficientnet_b4
   pretrained: True
   num_classes: 10
   in_chans: 3
