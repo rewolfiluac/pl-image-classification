@@ -20,7 +20,7 @@ def train(cfg):
         mode=cfg.callback.checkpoint.mode,
         save_weights_only=cfg.callback.checkpoint.save_weights_only,
         filename=cfg.callback.checkpoint.filename,
-        dirpath=urlparse(mlflow.get_artifact_uri()).path
+        dirpath=mlflow.get_artifact_uri()
     )
 
     trainer = Trainer(
@@ -60,6 +60,7 @@ def run():
 
     seed_everything(seed=cfg.general.seed)
 
+    mlflow.set_tracking_uri(cfg.mlflow.server_uri)
     mlflow.pytorch.autolog()
     mlflow.log_artifact(args.config)
 
