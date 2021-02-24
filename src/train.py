@@ -13,6 +13,7 @@ from utils.factory import get_transform
 
 
 def train(cfg):
+    print(mlflow.get_artifact_uri())
     checkpoint_callback = ModelCheckpoint(
         monitor=cfg.callback.checkpoint.monitor,
         save_last=cfg.callback.checkpoint.save_last,
