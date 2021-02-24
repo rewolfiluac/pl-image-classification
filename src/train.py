@@ -61,6 +61,11 @@ def run():
     seed_everything(seed=cfg.general.seed)
 
     mlflow.set_tracking_uri(cfg.mlflow.server_uri)
+
+    os.environ["MLFLOW_S3_ENDPOINT_URL"] = "http://{先程立ち上げたTrackingサーバのIPアドレス}:9000"
+    os.environ["AWS_ACCESS_KEY_ID"] = "minio-access-key"
+    os.environ["AWS_SECRET_ACCESS_KEY"] = "minio-secret-key"
+
     mlflow.pytorch.autolog()
     mlflow.log_artifact(args.config)
 

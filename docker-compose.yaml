@@ -13,6 +13,9 @@ services:
     runtime: nvidia
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
+      - MLFLOW_S3_ENDPOINT_URL=http://minio:9000
+      - AWS_ACCESS_KEY_ID=minio-access-key
+      - AWS_SECRET_ACCESS_KEY=minio-secret-key
     shm_size: "2gb"
     tty: true
     volumes:
