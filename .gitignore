@@ -1,7 +1,14 @@
 .vscode
+.mypy_cache
 .env
+
+minio1
+mlflow
+mysql
 
 mlruns
 data
 lightning_logs
 __pycache__
+
+*.pth

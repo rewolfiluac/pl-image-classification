@@ -4,7 +4,7 @@ ARG UID
 ARG GID
 
 RUN pip install --upgrade pip && \
-    pip install mlflow mysqlclient sqlalchemy boto3
+    pip install mlflow psycopg2 boto3
 
 # sudo権限を持つ一般ユーザーを作成
 ENV USER mlflow

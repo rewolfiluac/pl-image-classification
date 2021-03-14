@@ -1,5 +1,5 @@
-mlflow:
-  server_uri: http://mlflow:5000
+server:
+  mlflow_uri: http://mlflow:5000
 
 general:
   seed: 57

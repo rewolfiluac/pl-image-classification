@@ -1,6 +1,8 @@
 import os
 from urllib.parse import urlparse
 
+import gorilla
+import fsspec
 import mlflow
 from pytorch_lightning.trainer import Trainer, seed_everything
 from pytorch_lightning.callbacks import ModelCheckpoint
@@ -11,10 +13,12 @@ from pl_module import LightningModuleReg
 from pl_data_module import ImageDataModule
 from utils.util import get_parser, read_yaml, git_commits
 from utils.factory import get_transform
+from utils.s3 import setup_endpoint
 
 
 def train(cfg):
-    print(mlflow.get_artifact_uri())
+    setup_endpoint("http://minio:9000")
+    
     checkpoint_callback = ModelCheckpoint(
         monitor=cfg.callback.checkpoint.monitor,
         save_last=cfg.callback.checkpoint.save_last,
@@ -53,7 +57,7 @@ def train(cfg):
     trainer.fit(model=pl_module, datamodule=pl_data_module)
 
 
-@git_commits
+# @git_commits
 def run():
     args = get_parser().parse_args()
 
@@ -62,11 +66,7 @@ def run():
 
     seed_everything(seed=cfg.general.seed)
 
-    mlflow.set_tracking_uri(cfg.mlflow.server_uri)
-    os.environ["MLFLOW_S3_ENDPOINT_URL"] = "http://minio:9000"
-    os.environ["AWS_ACCESS_KEY_ID"] = "minio-access-key"
-    os.environ["AWS_SECRET_ACCESS_KEY"] = "minio-secret-key"
-
+    mlflow.set_tracking_uri(cfg.server.mlflow_uri)
     mlflow.pytorch.autolog()
     mlflow.log_artifact(args.config)
 
