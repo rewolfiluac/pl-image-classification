@@ -26,7 +26,7 @@ def train(cfg):
         mode=cfg.callback.checkpoint.mode,
         save_weights_only=cfg.callback.checkpoint.save_weights_only,
         filename=cfg.callback.checkpoint.filename,
-        dirpath=mlflow.get_artifact_uri()
+        dirpath=mlflow.get_artifact_uri(),
     )
 
     trainer = Trainer(
