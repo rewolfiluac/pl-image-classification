@@ -11,13 +11,13 @@ def apply_gorrila(function: Any, module: Any):
     gorilla.apply(patch)
 
 def setup_endpoint(endpoint_url: str):
-    def filesystem(*args, **kwargs):
-        if kwargs["protocol"] == "s3":
-            kwargs["client_kwargs"] = {
+    def filesystem(protocol, **storage_options):
+        if protocol == "s3":
+            storage_options["client_kwargs"] = {
                 "endpoint_url": endpoint_url,
             }
         original = gorilla.get_original_attribute(fsspec, 'filesystem')
-        return original(*args, **kwargs)
+        return original(protocol, **storage_options)
     def open_files(*args, **kwargs):
         kwargs["client_kwargs"] = {
                 "endpoint_url": endpoint_url,
