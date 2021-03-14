@@ -1,6 +1,9 @@
 # pl-image-classification
 ## Environment
-- [Dockerfile](https://github.com/rewolfiluac/develop-env-docker)
+```
+bash make_env.sh
+docker-compose up -d --build 
+```
 
 ## Download CIFAR10 Dataset
 ```

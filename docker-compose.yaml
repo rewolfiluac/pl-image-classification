@@ -59,8 +59,6 @@ services:
       POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
     hostname: postgresql
     restart: always
-    # volumes:
-    #  - "./postgres_data/data:/var/lib/postgresql/data"
   minio:
     image: minio/minio
     ports:

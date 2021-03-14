@@ -24,12 +24,12 @@ RUN apt-get update \
 RUN curl -kL https://bootstrap.pypa.io/get-pip.py | sudo python3.7 && \
     python3.7 -m pip install numpy \
     opencv_python opencv_python_headless \
-    torch==1.7.1+cu110 torchvision==0.8.2+cu110 torchaudio===0.7.2 -f https://download.pytorch.org/whl/torch_stable.html \
+    torch==1.8.0+cu111 torchvision==0.9.0+cu111 torchaudio==0.8.0 -f https://download.pytorch.org/whl/torch_stable.html \
     pytorch-lightning mlflow gorilla \
-    scikit-image==0.17.2 scikit-learn==0.23.2 \
-    onnx==1.8.0 \
-    timm==0.3.2 torch_optimizer==0.0.1a17 addict==2.4.0 \
-    flake8==3.8.4 autopep8==1.5.4 \
+    scikit-image scikit-learn \
+    onnx \
+    timm torch_optimizer addict \
+    flake8 black mypy \
     omegaconf boto3 s3fs \
     -U git+https://github.com/albumentations-team/albumentations
 
