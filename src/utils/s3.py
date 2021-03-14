@@ -4,6 +4,12 @@ import fsspec
 
 
 def apply_gorrila(function: Callable, module: Any):
+    """Overriding a function using a gorilla patch.
+
+    Args:
+        function (Callable): Override function
+        module (Any): Function caller module
+    """
     patch = gorilla.Patch(
         module, function.__name__, function, settings=gorilla.Settings(allow_hit=True)
     )
@@ -11,6 +17,12 @@ def apply_gorrila(function: Callable, module: Any):
 
 
 def setup_endpoint(endpoint_url: str):
+    """Specify the endpoint to be saved to S3.
+
+    Args:
+        endpoint_url (str): endpoint url
+    """
+
     def filesystem(protocol, **storage_options):
         if protocol == "s3":
             storage_options["client_kwargs"] = {
