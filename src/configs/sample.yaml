@@ -1,5 +1,6 @@
 server:
   mlflow_uri: http://mlflow:5000
+  s3_endpoint: http://minio:9000
 
 general:
   seed: 57

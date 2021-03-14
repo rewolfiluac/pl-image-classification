@@ -17,8 +17,8 @@ from utils.s3 import setup_endpoint
 
 
 def train(cfg):
-    setup_endpoint("http://minio:9000")
-    
+    setup_endpoint(cfg.server.s3_endpoint)
+
     checkpoint_callback = ModelCheckpoint(
         monitor=cfg.callback.checkpoint.monitor,
         save_last=cfg.callback.checkpoint.save_last,
@@ -57,7 +57,7 @@ def train(cfg):
     trainer.fit(model=pl_module, datamodule=pl_data_module)
 
 
-# @git_commits
+@git_commits
 def run():
     args = get_parser().parse_args()
 
