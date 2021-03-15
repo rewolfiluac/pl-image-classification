@@ -5,8 +5,13 @@ import torch
 from addict import Dict
 from torch.utils.data import DataLoader
 from tqdm import tqdm
-from sklearn.metrics import (confusion_matrix, accuracy_score, precision_score,
-                             recall_score, f1_score)
+from sklearn.metrics import (
+    confusion_matrix,
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+)
 from pytorch_lightning.trainer import seed_everything
 
 from pl_module import LightningModuleInference
@@ -15,24 +20,21 @@ from utils.factory import get_transform
 from utils.util import get_parser, read_yaml
 
 
-TARGET_EXTENSION = [
-    ".jpg",
-    ".png",
-    ".tiff"
-]
+TARGET_EXTENSION = [".jpg", ".png", ".tiff"]
 
 TEST_ROOT_PATH = "../data/CIFAR10/test"
 OUTPUT_PATH = "../data/CIFAR10/output"
-CHECKPOINT = "/home/dev/pl-image-classification/src/mlruns/0/2ff4a6e6cc2f4d3082d7428cd8e386b9/artifacts/last.ckpt"
+CHECKPOINT = "/home/dev/pl-image-classification/last.ckpt"
 
 
 def inference(cfg):
-    device = torch.device(
-        "cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     # define model
-    pl_module = LightningModuleInference.load_from_checkpoint(
-        CHECKPOINT, cfg=cfg
-    ).eval().to(device)
+    pl_module = (
+        LightningModuleInference.load_from_checkpoint(CHECKPOINT, cfg=cfg)
+        .eval()
+        .to(device)
+    )
 
     # define transform
     transform = get_transform(cfg.transform.val)
