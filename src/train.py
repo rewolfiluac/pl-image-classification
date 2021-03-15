@@ -1,9 +1,9 @@
 import os
 from urllib.parse import urlparse
 
-import gorilla
-import fsspec
 import mlflow
+import hydra
+from omegaconf import DictConfig
 from pytorch_lightning.trainer import Trainer, seed_everything
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import LightningLoggerBase
@@ -58,7 +58,10 @@ def train(cfg):
 
 
 @git_commits
-def run():
+@hydra.main(config_path="../sample.yaml")
+def run(cfg: DictConfig):
+    hydra.output_subdir = None
+    print(cfg)
     args = get_parser().parse_args()
 
     cfg = read_yaml(path=args.config)
