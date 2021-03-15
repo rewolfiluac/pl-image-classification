@@ -58,7 +58,7 @@ def train(cfg):
 
 
 @git_commits
-@hydra.main(config_name="../sample.yaml")
+@hydra.main(config_name="../configs")
 def run(cfg: DictConfig):
     hydra.output_subdir = None
     print(cfg)
