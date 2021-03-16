@@ -1,4 +1,3 @@
-# @package _group_
 run:
   dir: ./
 output_subdir: null
