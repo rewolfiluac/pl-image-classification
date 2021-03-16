@@ -1,8 +1,10 @@
 import sys
 import os
 import tempfile
+from pathlib import Path
 from urllib.parse import urlparse
 
+import yaml
 import mlflow
 import hydra
 from omegaconf import DictConfig
@@ -69,8 +71,10 @@ def run(cfg: DictConfig):
     mlflow.pytorch.autolog()
     # save config
     with tempfile.TemporaryDirectory() as td:
-        print(td)
-        mlflow.log_artifact("./configs")
+        p = Path(str(td)) / "params.yaml"
+        with open(str(p), "w") as file:
+            yaml.dump(cfg, file)
+        mlflow.log_artifact(str(p))
 
     train(cfg)
 
