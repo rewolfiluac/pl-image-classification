@@ -58,7 +58,7 @@ def train(cfg):
 
 
 @git_commits
-@hydra.main(config_name="./configs/sample.yaml")
+@hydra.main(config_path="./configs", config_name="sample.yaml")
 def run(cfg: DictConfig):
     print(cfg)
     args = get_parser().parse_args()
