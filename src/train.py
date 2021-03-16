@@ -58,19 +58,13 @@ def train(cfg):
 
 
 @git_commits
-@hydra.main(config_path="./configs", config_name="sample")
+@hydra.main(config_path="./configs", config_name="main")
 def run(cfg: DictConfig):
-    print(cfg)
-    args = get_parser().parse_args()
-
-    cfg = read_yaml(path=args.config)
-    cfg.data.dataset.val_k = args.k_fold_num
-
     seed_everything(seed=cfg.general.seed)
 
     mlflow.set_tracking_uri(cfg.server.mlflow_uri)
     mlflow.pytorch.autolog()
-    mlflow.log_artifact(args.config)
+    mlflow.log_artifact("./configs")
 
     train(cfg)
 
