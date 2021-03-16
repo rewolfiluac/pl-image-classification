@@ -70,6 +70,7 @@ def run(cfg: DictConfig):
     mlflow.pytorch.autolog()
 
     mlflow.log_artifact("./configs")
+    mlflow.log_params(cfg)
 
     train(cfg)
 
