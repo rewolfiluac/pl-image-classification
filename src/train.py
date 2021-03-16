@@ -64,15 +64,14 @@ def train(cfg):
 @git_commits
 @hydra.main(config_path="./configs", config_name="main")
 def run(cfg: DictConfig):
-    print(dict(cfg))
     seed_everything(seed=cfg.general.seed)
 
     mlflow.set_tracking_uri(cfg.server.mlflow_uri)
-    mlflow.pytorch.autolog()
+    with mlflow.run():
+        mlflow.log_artifact("./configs")
+        mlflow.log_params(dict(cfg))
 
-    mlflow.log_artifact("./configs")
-
-    train(cfg)
+        train(cfg)
 
 
 if __name__ == "__main__":
