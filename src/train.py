@@ -1,5 +1,6 @@
 import sys
 import os
+import tempfile
 from urllib.parse import urlparse
 
 import mlflow
@@ -12,7 +13,7 @@ from pytorch_lightning.utilities import rank_zero_only
 
 from pl_module import LightningModuleReg
 from pl_data_module import ImageDataModule
-from utils.util import get_parser, read_yaml, git_commits
+from utils.util import git_commits
 from utils.factory import get_transform
 from utils.s3 import setup_endpoint
 
@@ -66,8 +67,10 @@ def run(cfg: DictConfig):
 
     mlflow.set_tracking_uri(cfg.server.mlflow_uri)
     mlflow.pytorch.autolog()
-    # コンフィグを保存
-    mlflow.log_artifact("./configs")
+    # save config
+    with tempfile.TemporaryDirectory() as td:
+        print(td)
+        mlflow.log_artifact("./configs")
 
     train(cfg)
 
