@@ -1,3 +1,4 @@
+import sys
 import os
 from urllib.parse import urlparse
 
@@ -14,6 +15,8 @@ from pl_data_module import ImageDataModule
 from utils.util import get_parser, read_yaml, git_commits
 from utils.factory import get_transform
 from utils.s3 import setup_endpoint
+
+sys.dont_write_bytecode = True
 
 
 def train(cfg):
