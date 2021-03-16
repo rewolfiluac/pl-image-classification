@@ -1,6 +1,6 @@
 # @package _global_ 
 defaults:
-  - conf: hydra
+  - hydra: hydra
 
 server:
   mlflow_uri: http://mlflow:5000

@@ -1,0 +1,104 @@
+conf:
+  hydra:
+    run:
+      dir: ./
+    output_subdir: null
+    job_logging:
+      version: 1
+      handlers:
+        console:
+          class: logging.StreamHandler
+          stream: ext://sys.stdout
+      root:
+        handlers:
+        - console
+      disable_existing_loggers: false
+server:
+  mlflow_uri: http://mlflow:5000
+  s3_endpoint: http://minio:9000
+general:
+  seed: 57
+  epoch: 500
+  gpus:
+  - 0
+  precision: 16
+  amp_backend: native
+  amp_level: O2
+  accelerator: null
+  acc_grad: 1
+  deterministic: true
+  debug: false
+  resume_from_checkpoint: null
+callback:
+  checkpoint:
+    monitor: val_loss_mean
+    save_last: true
+    save_top_k: 1
+    mode: min
+    save_weights_only: true
+    filename: '{epoch}-{val_loss_mean:.3f}-{val_acc:.3f}.pth'
+data:
+  dataset:
+    root: ../data/CIFAR10/train
+    k_fold: 20
+    val_k: 0
+  dataloader:
+    batch_size: 128
+    num_workers: 4
+    shuffle: true
+    pin_memory: true
+model:
+  base: timm
+  model_name: tf_efficientnet_b4
+  pretrained: true
+  num_classes: 10
+  in_chans: 3
+  drop_rate: 0.3
+loss:
+  base: torch
+  name: cross_entropy
+optimizer:
+  optimizer:
+    optim_name: RAdam
+    params:
+      lr: 1.0e-05
+  scheduler:
+    name: CosineAnnealingWarmUpRestarts
+    params:
+      T_0: 500
+      T_mult: 1
+      eta_max: 0.001
+      T_up: 10
+      gamma: 0.8
+transform:
+  train:
+    Compose:
+    - PadIfNeeded:
+        min_height: 36
+        min_width: 36
+    - RandomCrop:
+        height: 32
+        width: 32
+    - HorizontalFlip
+    - Normalize:
+        mean:
+        - 0.485
+        - 0.456
+        - 0.406
+        std:
+        - 0.229
+        - 0.224
+        - 0.225
+    - ToTensorV2
+  val:
+    Compose:
+    - Normalize:
+        mean:
+        - 0.485
+        - 0.456
+        - 0.406
+        std:
+        - 0.229
+        - 0.224
+        - 0.225
+    - ToTensorV2
