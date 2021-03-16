@@ -16,8 +16,6 @@ from utils.util import get_parser, read_yaml, git_commits
 from utils.factory import get_transform
 from utils.s3 import setup_endpoint
 
-sys.dont_write_bytecode = True
-
 
 def train(cfg):
     setup_endpoint(cfg.server.s3_endpoint)
@@ -67,6 +65,7 @@ def run(cfg: DictConfig):
 
     mlflow.set_tracking_uri(cfg.server.mlflow_uri)
     mlflow.pytorch.autolog()
+    # コンフィグを保存
     mlflow.log_artifact("./configs")
 
     train(cfg)

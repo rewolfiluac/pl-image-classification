@@ -10,4 +10,4 @@ job_logging:
       stream: ext://sys.stdout
   root:
     handlers: [console]
-  disable_existing_loggers: false
+  disable_existing_loggers: False
