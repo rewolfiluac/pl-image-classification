@@ -64,17 +64,12 @@ def train(cfg):
 @git_commits
 @hydra.main(config_path="./configs", config_name="main")
 def run(cfg: DictConfig):
-    print(cfg)
     seed_everything(seed=cfg.general.seed)
 
     mlflow.set_tracking_uri(cfg.server.mlflow_uri)
     mlflow.pytorch.autolog()
-    # save config
-    with tempfile.TemporaryDirectory() as td:
-        p = Path(str(td)) / "params.yaml"
-        with open(str(p), "w") as file:
-            yaml.dump(cfg, file)
-        mlflow.log_artifact(str(p))
+
+    mlflow.log_artifact("./configs")
 
     train(cfg)
 
