@@ -1,5 +1,16 @@
 # pl-image-classification
 ## Environment
+### Container
+- dev (Main Developing Environment)
+- mlflow (Tracking ML)
+- minio (S3 Compatible Storage)
+- posgre (SQL)
+### Develop
+- Pytorch (ML)
+- Pytorch Lightning (Useful Pytorch Wrapper)
+- hydra (useful argument parser)
+
+## Startup Docker Containers
 ```
 bash make_env.sh
 docker-compose up -d --build 
