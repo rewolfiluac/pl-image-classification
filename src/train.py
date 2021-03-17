@@ -1,23 +1,15 @@
-import sys
-import os
-import tempfile
-from pathlib import Path
-from urllib.parse import urlparse
-
-import yaml
 import mlflow
 import hydra
 from omegaconf import DictConfig
 from pytorch_lightning.trainer import Trainer, seed_everything
 from pytorch_lightning.callbacks import ModelCheckpoint
-from pytorch_lightning.loggers import LightningLoggerBase
-from pytorch_lightning.utilities import rank_zero_only
 
 from pl_module import LightningModuleReg
 from pl_data_module import ImageDataModule
 from utils.util import git_commits
 from utils.factory import get_transform
 from utils.s3 import setup_endpoint
+from utils.mlflow import artifacts_omegaconf
 
 
 def train(cfg):
@@ -70,7 +62,8 @@ def run(cfg: DictConfig):
     mlflow.set_tracking_uri(cfg.server.mlflow_uri)
     mlflow.pytorch.autolog()
 
-    mlflow.log_artifact("./configs")
+    artifacts_omegaconf(cfg)
+    # mlflow.log_artifact("./configs")
     mlflow.log_params(dict(cfg))
 
     train(cfg)
