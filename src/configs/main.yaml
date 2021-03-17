@@ -1,8 +1,9 @@
 defaults:
   - hydra: default
   - server: default
-  - transform/train: train_default
-  - transform/val: val_default
+transform:
+  - train: train_default
+  - val: val_default
 
 general:
   seed: 57
