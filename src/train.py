@@ -1,19 +1,15 @@
-import os
-from urllib.parse import urlparse
-
-import gorilla
-import fsspec
 import mlflow
+import hydra
+from omegaconf import DictConfig
 from pytorch_lightning.trainer import Trainer, seed_everything
 from pytorch_lightning.callbacks import ModelCheckpoint
-from pytorch_lightning.loggers import LightningLoggerBase
-from pytorch_lightning.utilities import rank_zero_only
 
 from pl_module import LightningModuleReg
 from pl_data_module import ImageDataModule
-from utils.util import get_parser, read_yaml, git_commits
+from utils.util import git_commits
 from utils.factory import get_transform
 from utils.s3 import setup_endpoint
+from utils.mlflow import artifacts_omegaconf
 
 
 def train(cfg):
@@ -39,7 +35,7 @@ def train(cfg):
         amp_backend=cfg.general.amp_backend,
         amp_level=cfg.general.amp_level,
         accumulate_grad_batches=cfg.general.acc_grad,
-        fast_dev_run=True if cfg.general.debug else False,
+        fast_dev_run=cfg.general.debug,
         limit_train_batches=0.25 if cfg.general.debug else 1.0,
         limit_val_batches=0.25 if cfg.general.debug else 1.0,
         resume_from_checkpoint=cfg.general.resume_from_checkpoint,
@@ -58,17 +54,15 @@ def train(cfg):
 
 
 @git_commits
-def run():
-    args = get_parser().parse_args()
-
-    cfg = read_yaml(path=args.config)
-    cfg.data.dataset.val_k = args.k_fold_num
-
+@hydra.main(config_path="./configs", config_name="main")
+def run(cfg: DictConfig):
+    print(cfg)
     seed_everything(seed=cfg.general.seed)
 
     mlflow.set_tracking_uri(cfg.server.mlflow_uri)
     mlflow.pytorch.autolog()
-    mlflow.log_artifact(args.config)
+
+    artifacts_omegaconf(cfg)
 
     train(cfg)
 
