@@ -37,7 +37,8 @@ class LightningModuleReg(pl.LightningModule):
             "val_loss_mean": float(val_loss_mean.cpu().numpy()),
             "val_acc": float(val_acc),
         }
-        self.log("val_acc", metrics["val_acc"])
+        self.log("val_loss_mean", float(val_loss_mean.cpu().numpy()))
+        self.log("val_acc", float(val_acc))
         # self.log_dict(metrics)
 
     def configure_optimizers(self):
