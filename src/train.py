@@ -63,8 +63,6 @@ def run(cfg: DictConfig):
     mlflow.pytorch.autolog()
 
     artifacts_omegaconf(cfg)
-    # mlflow.log_artifact("./configs")
-    mlflow.log_params(dict(cfg))
 
     train(cfg)
 
