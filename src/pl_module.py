@@ -1,4 +1,5 @@
 import torch
+import mlflow
 import numpy as np
 import pytorch_lightning as pl
 
@@ -19,7 +20,8 @@ class LightningModuleReg(pl.LightningModule):
         x, y = batch
         y_hat = self(x)
         loss = self.loss(y_hat, y)
-        self.log("train_loss", loss)
+        # self.log("train_loss", loss)
+        mlflow.log_metric("train_loss", loss)
         return loss
 
     def validation_step(self, batch, batch_idx):
