@@ -1,7 +1,6 @@
 import torch
 import numpy as np
 import pytorch_lightning as pl
-import mlflow
 
 from utils.factory import get_model, get_loss, get_optimizer
 
@@ -20,7 +19,7 @@ class LightningModuleReg(pl.LightningModule):
         x, y = batch
         y_hat = self(x)
         loss = self.loss(y_hat, y)
-        self.log("train_loss", loss)
+        self.log("train_loss", loss, on_epoch=True)
         return loss
 
     def validation_step(self, batch, batch_idx):
@@ -38,8 +37,7 @@ class LightningModuleReg(pl.LightningModule):
             "val_loss_mean": float(val_loss_mean.cpu().numpy()),
             "val_acc": float(val_acc),
         }
-        mlflow.log_metrics(metrics, step=self.current_epoch)
-        # self.log_metrics(metrics, step=self.current_epoch)
+        self.log_dict(metrics, on_epoch=True)
 
     def configure_optimizers(self):
         optimizer, scheduler = get_optimizer(
