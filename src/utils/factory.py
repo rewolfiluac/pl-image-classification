@@ -56,7 +56,7 @@ def get_transform(transform_cfg):
 
 def __build_transform(transform_cfg):
     name = transform_cfg.name
-    params = transform_cfg.params
+    params = transform_cfg.params if "params" in transform_cfg.keys() else {}
     if type(params) == DictConfig:
         return getattr(transforms, name)(**params)
     elif type(params) == ListConfig:
