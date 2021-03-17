@@ -1,5 +1,6 @@
 from torch.nn import functional
 from timm import create_model, list_models
+from omegaconf.listconfig import ListConfig
 
 import optimizers
 import schedulers
@@ -58,7 +59,7 @@ def __build_transform(transform_cfg):
     print(type(params))
     if type(params) == dict:
         return getattr(transforms, name)(**params)
-    elif type(params) == list:
+    elif type(params) == ListConfig:
         return getattr(transforms, name)([__build_transform(aug) for aug in params])
     else:
         raise Exception(
