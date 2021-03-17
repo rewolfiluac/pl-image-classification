@@ -55,8 +55,7 @@ def get_transform(transform_cfg):
 def __build_transform(transform_cfg):
     name = transform_cfg.name
     params = transform_cfg.params
-    # if type(params) == str:
-    #     return getattr(transforms, transform_cfg)()
+    print(type(params))
     if type(params) == dict:
         return getattr(transforms, name)(**params)
     elif type(params) == list:
