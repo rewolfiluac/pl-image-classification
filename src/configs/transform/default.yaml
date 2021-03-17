@@ -1,6 +1,6 @@
 train:
   name: Compose
-  list: 
+  params: 
     - name: PadIfNeeded
       params: 
         min_height: 36
@@ -17,7 +17,7 @@ train:
     - name: ToTensorV2
 val:
   name: Compose
-  list: 
+  params: 
     - name: Normalize
       params: 
         mean: [0.485, 0.456, 0.406]

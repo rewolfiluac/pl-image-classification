@@ -35,7 +35,7 @@ def train(cfg):
         amp_backend=cfg.general.amp_backend,
         amp_level=cfg.general.amp_level,
         accumulate_grad_batches=cfg.general.acc_grad,
-        fast_dev_run=True if cfg.general.debug else False,
+        fast_dev_run=cfg.general.debug,
         limit_train_batches=0.25 if cfg.general.debug else 1.0,
         limit_val_batches=0.25 if cfg.general.debug else 1.0,
         resume_from_checkpoint=cfg.general.resume_from_checkpoint,
