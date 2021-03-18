@@ -3,7 +3,6 @@ import hydra
 from omegaconf import DictConfig
 from pytorch_lightning.trainer import Trainer, seed_everything
 from pytorch_lightning.callbacks import ModelCheckpoint
-from pytorch_lightning.loggers import MLFlowLogger
 
 from pl_module import LightningModuleReg
 from pl_data_module import ImageDataModule
@@ -28,7 +27,7 @@ def train(cfg):
 
     trainer = Trainer(
         checkpoint_callback=True,
-        callbacks=[checkpoint_callback],
+        # callbacks=[checkpoint_callback],
         logger=None,
         max_epochs=cfg.general.epoch,
         gpus=cfg.general.gpus,
