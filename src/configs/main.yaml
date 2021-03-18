@@ -16,12 +16,6 @@ general:
   debug: False
   resume_from_checkpoint: null
 
-logger:
-  experiment_name: Default
-  tags:
-    mode: train
-
-
 callback:
   checkpoint:
     monitor: val_loss_mean

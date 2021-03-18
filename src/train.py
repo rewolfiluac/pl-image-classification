@@ -26,17 +26,10 @@ def train(cfg):
         dirpath=mlflow.get_artifact_uri(),
     )
 
-    logger = MLFlowLogger(
-        experiment_name=cfg.logger.experiment_name,
-        tracking_uri=cfg.server.mlflow_uri,
-        tags={"Mode": "train"},
-        save_dir=None,
-    )
-
     trainer = Trainer(
         checkpoint_callback=True,
         callbacks=[checkpoint_callback],
-        logger=logger,
+        logger=None,
         max_epochs=cfg.general.epoch,
         gpus=cfg.general.gpus,
         precision=cfg.general.precision,
