@@ -39,7 +39,6 @@ class LightningModuleReg(pl.LightningModule):
             "val_acc": float(val_acc),
         }
         self.log_dict(metrics, on_epoch=True, logger=False)
-        mlflow.log_metrics(metrics)
 
     def configure_optimizers(self):
         optimizer, scheduler = get_optimizer(
