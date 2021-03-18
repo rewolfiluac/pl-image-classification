@@ -20,7 +20,7 @@ class LightningModuleReg(pl.LightningModule):
         x, y = batch
         y_hat = self(x)
         loss = self.loss(y_hat, y)
-        # self.log("train_loss", loss, on_epoch=True)
+        self.log("train_loss", loss, on_epoch=True, logger=False)
         return loss
 
     def validation_step(self, batch, batch_idx):

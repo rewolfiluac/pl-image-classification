@@ -61,9 +61,8 @@ def run(cfg: DictConfig):
 
     mlflow.set_tracking_uri(cfg.server.mlflow_uri)
     mlflow.pytorch.autolog()
-    with mlflow.start_run() as run:
-        artifacts_omegaconf(cfg)
-        train(cfg)
+    artifacts_omegaconf(cfg)
+    train(cfg)
 
 
 if __name__ == "__main__":
