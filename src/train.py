@@ -3,6 +3,7 @@ import hydra
 from omegaconf import DictConfig
 from pytorch_lightning.trainer import Trainer, seed_everything
 from pytorch_lightning.callbacks import ModelCheckpoint
+from pytorch_lightning.loggers import MLFlowLogger
 
 from pl_module import LightningModuleReg
 from pl_data_module import ImageDataModule
@@ -25,10 +26,17 @@ def train(cfg):
         dirpath=mlflow.get_artifact_uri(),
     )
 
+    logger = MLFlowLogger(
+        experiment_name=cfg.logger.experiment_name,
+        tracking_uri=cfg.server.mlflow_uri,
+        tags={"Mode": "train"},
+        save_dir=None,
+    )
+
     trainer = Trainer(
         checkpoint_callback=True,
         callbacks=[checkpoint_callback],
-        logger=False,
+        logger=logger,
         max_epochs=cfg.general.epoch,
         gpus=cfg.general.gpus,
         precision=cfg.general.precision,
@@ -59,10 +67,9 @@ def run(cfg: DictConfig):
     seed_everything(seed=cfg.general.seed)
 
     mlflow.set_tracking_uri(cfg.server.mlflow_uri)
-    mlflow.pytorch.autolog()
-    with mlflow.start_run() as run:
-        artifacts_omegaconf(cfg)
-        train(cfg)
+    # mlflow.pytorch.autolog()
+    artifacts_omegaconf(cfg)
+    train(cfg)
 
 
 if __name__ == "__main__":
