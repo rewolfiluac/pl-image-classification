@@ -17,8 +17,8 @@ general:
   resume_from_checkpoint: null
 
 logger:
-  experiment_name: default
-  
+  experiment_name: Default
+
 
 callback:
   checkpoint:
