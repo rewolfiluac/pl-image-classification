@@ -27,7 +27,7 @@ def train(cfg):
 
     trainer = Trainer(
         checkpoint_callback=True,
-        # callbacks=[checkpoint_callback],
+        callbacks=[checkpoint_callback],
         logger=None,
         max_epochs=cfg.general.epoch,
         gpus=cfg.general.gpus,
