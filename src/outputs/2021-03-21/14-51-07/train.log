@@ -1,0 +1,6 @@
+[2021-03-21 14:51:07,414][lightning][INFO] - Global seed set to 57
+[2021-03-21 14:51:07,488][botocore.credentials][INFO] - Found credentials in environment variables.
+[2021-03-21 14:51:07,598][botocore.credentials][INFO] - Found credentials in environment variables.
+[2021-03-21 14:51:07,672][lightning][INFO] - GPU available: True, used: True
+[2021-03-21 14:51:07,672][lightning][INFO] - TPU available: None, using: 0 TPU cores
+[2021-03-21 14:51:07,673][lightning][INFO] - Using native 16bit precision.
