@@ -21,7 +21,7 @@ class LightningModuleReg(pl.LightningModule):
         y_hat = self(x)
         loss = self.loss(y_hat, y)
         self.log("train_loss", loss)
-        mlflow.log_metric("train_loss", loss)
+        mlflow.log_metric("train_loss", float(loss))
         return loss
 
     def validation_step(self, batch, batch_idx):
