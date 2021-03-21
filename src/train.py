@@ -1,6 +1,6 @@
 import mlflow
 import hydra
-from omegaconf import DictConfig, OmegaConf
+from omegaconf import DictConfig
 from pytorch_lightning.trainer import Trainer, seed_everything
 from pytorch_lightning.callbacks import ModelCheckpoint
 
@@ -56,7 +56,6 @@ def train(cfg):
 @git_commits
 @hydra.main(config_path="./configs", config_name="main")
 def run(cfg: DictConfig) -> None:
-    print(OmegaConf.to_yaml(cfg))
     seed_everything(seed=cfg.general.seed)
 
     print(cfg.server.mlflow_uri)
