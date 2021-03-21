@@ -30,7 +30,8 @@ RUN curl -kL https://bootstrap.pypa.io/get-pip.py | sudo python3.7 && \
     onnx \
     timm torch_optimizer addict \
     flake8 black mypy \
-    omegaconf boto3 s3fs \
+    hydra-core --upgrade \
+    boto3 s3fs \
     -U git+https://github.com/albumentations-team/albumentations
 
 # sudo権限を持つ一般ユーザーを作成

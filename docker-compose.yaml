@@ -37,28 +37,28 @@ services:
       AWS_ACCESS_KEY_ID: minio-access-key
       AWS_SECRET_ACCESS_KEY: minio-secret-key
     depends_on:
-      - postgresql
+      # - postgresql
       - minio
     ports:
         - "5000:5000"
     command: >
       mlflow server
-        --backend-store-uri postgresql+psycopg2://postgre:postgre@postgresql:5432/mlflow-db
+        --backend-store-uri sqlite:///mydb.sqlite
         --default-artifact-root s3://default/
         --host 0.0.0.0
         --port 5000
-  postgresql:
-    image: postgres:12.4
-    container_name: postgresql
-    ports:
-      - 5432:5432
-    environment:
-      POSTGRES_USER: postgre
-      POSTGRES_PASSWORD: postgre
-      POSTGRES_DB: mlflow-db
-      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
-    hostname: postgresql
-    restart: always
+  # postgresql:
+  #   image: postgres:12.4
+  #   container_name: postgresql
+  #   ports:
+  #     - 5432:5432
+  #   environment:
+  #     POSTGRES_USER: postgre
+  #     POSTGRES_PASSWORD: postgre
+  #     POSTGRES_DB: mlflow-db
+  #     POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+  #   hostname: postgresql
+  #   restart: always
   minio:
     image: minio/minio
     ports:
