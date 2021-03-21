@@ -21,7 +21,7 @@ class LightningModuleReg(pl.LightningModule):
         y_hat = self(x)
         loss = self.loss(y_hat, y)
         self.log("train_loss", loss)
-        mlflow.log_metric("train_loss", float(loss), step=self.epoch)
+        mlflow.log_metric("train_loss", float(loss), step=self.current_epoch)
         return loss
 
     def validation_step(self, batch, batch_idx):
@@ -39,9 +39,7 @@ class LightningModuleReg(pl.LightningModule):
             "val_loss_mean": float(val_loss_mean.cpu().numpy()),
             "val_acc": float(val_acc),
         }
-        mlflow.log_metrics(
-            metrics, 
-            step=self.epoch)
+        mlflow.log_metrics(metrics, step=self.current_epoch)
         self.log_dict(metrics)
 
     def configure_optimizers(self):
