@@ -59,7 +59,7 @@ def run(cfg: DictConfig):
     seed_everything(seed=cfg.general.seed)
 
     print(cfg.server.mlflow_uri)
-    mlflow.set_tracking_uri(cfg.defaults.server.mlflow_uri)
+    mlflow.set_tracking_uri(cfg.server.mlflow_uri)
     mlflow.pytorch.autolog()
     artifacts_omegaconf(cfg)
     train(cfg)
