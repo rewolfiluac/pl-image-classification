@@ -68,15 +68,15 @@ services:
       MINIO_ACCESS_KEY: minio-access-key
       MINIO_SECRET_KEY: minio-secret-key
     command: server /export
-  defaultbucket:
-    image: minio/mc
-    depends_on:
-      - minio
-    entrypoint: >
-      /bin/sh -c "
-      until (/usr/bin/mc config host add myminio http://minio:9000 minio-access-key minio-secret-key)
-      do echo 'try to create buckets...' && sleep 1; done;
-      /usr/bin/mc mb myminio/default;
-      /usr/bin/mc policy download myminio/default;
-      exit 0;
-      "
+  # defaultbucket:
+  #   image: minio/mc
+  #   depends_on:
+  #     - minio
+  #   entrypoint: >
+  #     /bin/sh -c "
+  #     until (/usr/bin/mc config host add myminio http://minio:9000 minio-access-key minio-secret-key)
+  #     do echo 'try to create buckets...' && sleep 1; done;
+  #     /usr/bin/mc mb myminio/default;
+  #     /usr/bin/mc policy download myminio/default;
+  #     exit 0;
+  #     "
