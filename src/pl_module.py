@@ -1,3 +1,5 @@
+from typing import List, Any
+
 import torch
 import mlflow
 import numpy as np
@@ -21,8 +23,13 @@ class LightningModuleReg(pl.LightningModule):
         y_hat = self(x)
         loss = self.loss(y_hat, y)
         self.log("train_loss", loss)
-        mlflow.log_metric("train_loss", float(loss), step=self.current_epoch)
         return loss
+
+    def training_epoch_end(self, outputs: List[Any]) -> None:
+        train_loss_mean = torch.stack([x["train_loss"] for x in outputs]).mean()
+        self.log("train_loss", train_loss_mean)
+        mlflow.log_metric("train_loss", float(train_loss_mean), step=self.current_epoch)
+        return super().training_epoch_end(outputs)
 
     def validation_step(self, batch, batch_idx):
         x, y = batch
