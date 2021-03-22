@@ -45,7 +45,7 @@ class LightningModuleReg(pl.LightningModule):
         labels_size = np.array([x["labels_size"] for x in outputs]).sum()
         val_acc = np.array([x["val_corr"] for x in outputs]).sum() / labels_size
         metrics = {
-            "val_loss_mean": val_loss_mean.cpu().numpy(),
+            "val_loss_mean": float(val_loss_mean.cpu().numpy()),
             "val_acc": float(val_acc),
         }
         mlflow.log_metrics(metrics, step=self.current_epoch)
