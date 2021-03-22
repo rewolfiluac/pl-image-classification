@@ -1,6 +1,7 @@
 .vscode
 .mypy_cache
 .env
+.log
 
 minio1
 mlflow
