@@ -29,7 +29,6 @@ class LightningModuleReg(pl.LightningModule):
         train_loss_mean = torch.stack([x["train_loss"] for x in outputs]).mean()
         self.log("train_loss", train_loss_mean)
         mlflow.log_metric("train_loss", float(train_loss_mean), step=self.current_epoch)
-        return super().training_epoch_end(outputs)
 
     def validation_step(self, batch, batch_idx):
         x, y = batch
